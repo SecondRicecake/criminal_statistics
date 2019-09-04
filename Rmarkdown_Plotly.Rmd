@@ -1,0 +1,44 @@
+---
+title: "Rmarkdown and Plotly"
+author: "Suz"
+date: "9/4/2019"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+# Dream Market Cocaine Transaction 
+
+
+```{r}
+
+library(plotly)
+
+dm_data <- read.csv("dream_market_cocaine_listings.csv") #read csv
+
+#create a dataframe to make it easier to work with the data
+df <- unique(data.frame(vendor_name = dm_data$vendor_name,successful_transaction=dm_data$successful_transactions))
+
+#sorted_df <- arrange(df,desc(successful_transaction))
+#top10_df <- head(sorted_df,10)
+
+```
+
+
+```{r}
+p <- plot_ly(
+  x = df$vendor_name,
+  y = df$successful_transaction,
+  name = "Vendor name by successful transaction",
+  type = "bar"
+) %>%
+  layout(title="Vendor name by successful transaction")
+#p
+
+tmpFile <- tempfile(fileext = ".png")
+export(p, file = tmpFile)
+```
+
+
+
