@@ -104,9 +104,12 @@ new_obj6 <- c(rep(new_obj3[3],times=3), rep(new_obj3[6],times=4),new_obj3[length
 #h
 new_obj7 <- new_obj5
 
-#mylst <- c(new_obj7[1],new_obj7[5:7],new_obj7[length(new_obj7)])
-#new_obj7[mylst] <-seq(from=99,to=95)
+mynumbers <- seq(from=99, to=95)
 
+new_obj7[1] <- mynumbers[1]
+new_obj7[5:7] <- mynumbers[2:4]
+new_obj7[length(new_obj7)]<-mynumbers[length(mynumbers)]
+new_obj7
 
 ```
 
@@ -115,13 +118,103 @@ new_obj7 <- new_obj5
 
 ```{r}
 #a
-
+foo <- c(2,0.5,1,2,0.5,1,2,0.5,1)
+foo[c(1:length(foo))] <- c(1,1,1)
+foo
 #b
+fahrenheit <- c(45,77,20,19,101,120,212)
+celsius <-5/9*(fahrenheit-32)
+celsius
 
 #c
+vec1 <- c(2,4,6)
+vec2 <- c(1,2)
+
+res <-rep(vec1, times=2)*c(rep(vec2[1], times=3), rep(vec2[2],times=3))
+res
 
 #d
+res[2:5]<-c(0.1,-100)
+res
+```
 
+
+
+
+#Exercise 3.1
+```{r}
+#a
+A <- matrix(c(4.3, 3.1, 8.2, 8.2, 3.2, 0.9, 1.6, 6.5),nrow=4, ncol=2)
+A
+#b
+A[-1,]
+#c
+C <-A
+C[2,] <-sort(C[2,])
+C
+#d
+D <- matrix(A[-4,-1],ncol=1)
+D
+#e
+E <- matrix(C[3:4,1:2], nrow=2, ncol=2)
+E
+#f
+Fm <-C
+Fm[c(1,4),c(1,2)] <- 0.5*diag(E)
+Fm
+```
+
+
+
+#Exercise 3.2
+
+```{r}
+#a
+m1 <-matrix(cbind(c(1,2,7),c(2,4,6)), nrow=3, ncol=2)
+m2 <-matrix(c(10,30,50,20,40,60), nrow=3, ncol=2)
+res <- 2/7*(m1-m2)
+res
+#b
+mA <- cbind(c(1,2,7))
+mB <- cbind(c(3,4,8))
+
+#i
+mA*mB
+#ii
+#t(mA)%*%mB
+#iii
+#t(mB)%*%(mA%*%t(mA))
+#iv
+#(mA%*%t(mA))%*%t(mB)
+#v
+#solve((t(mB)%*%mB)+(mA%*%t(mA))-100*diag(x=3))
+#c
+cA <-diag(c(2,3,5,-1))
+cres <- solve(cA)*cA-diag(x=4)
+cres
+```
+
+
+#Exercise 3.3
+```{r}
+#a
+aAR <- array(data=seq(from=4.8, to=0.1, length.out = 4*2*6),dim=c(4,2,6))
+aAR
+#b
+bAR <- aAR[c(4,1),2,]
+bAR
+#c
+cAR <- array(data=rep(bAR[2,], times=4, each=4), dim=c(2,2,2,3))
+cAR
+
+#d
+dAR <-aAR[,,-6]
+dAR
+
+#e
+eAR <- dAR
+eAR[c(2,4),2,c(1,3,5)] <- -99
+eAR
 ```
 
 
