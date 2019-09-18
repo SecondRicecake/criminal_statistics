@@ -1,0 +1,285 @@
+---
+title: "BookOfR_CH4-7"
+author: "Suz"
+date: '2019 9 17 '
+output: html_document
+---
+
+#4.1
+```{r}
+#a
+foo <- c(6,9,7,3,6,7,9,6,3,6,6,7,1,9,1)
+foo == 6
+foo >= 6
+foo < 6+2
+foo != 6
+
+#b
+baz <- foo[4:length(foo)]
+baz.mat <-array(baz,dim=c(2,2,3))
+baz.mat <= (6/2+4)
+baz.mat*2 <= (6/2+4)
+
+#c
+i10<-diag(x=10) 
+i10==0 
+
+#d
+any(baz.mat)
+all(baz.mat)
+
+#e
+any(i10)
+all(i10)
+```
+
+
+#4.2
+```{r}
+#a
+foo <- c(7,1,7,10,5,9,10,3,10,8)
+foo >5 | foo == 2
+
+#b
+bar <- c(8,8,4,4,5,1,5,6,6,8)
+bar == 6 & bar != 4
+
+#c
+intersect(foo[foo>5|foo==2], bar[bar==6&bar!=4])
+
+#d
+baz <- c(foo, bar)
+baz <= 14 & baz != 15
+
+#e
+foo && bar
+foo || bar
+```
+
+
+#4.3
+```{r}
+#a
+foo <- c(7,5,6,1,2,10,8,3,8,2)
+bar <- foo[foo>=5]
+foo <- foo[foo<5]
+foo
+
+#b
+baz <- matrix(bar, nrow=2, ncol=3)
+baz[which(x=baz==8)]=sqrt(baz[1,2])
+all(baz<=5&baz>4)
+
+#c
+qux<-array(c(10,5,1,4,7,4,3,3,1,3,4,3,1,7,8,3,7,3),dim=c(3,2,3))
+which(x=qux==3|qux==4)
+qux[which(x=qux<3|qux>=7)]=100
+
+#d
+foo[c(F,T)]
+foo[c(0,1)]
+
+```
+
+
+#4.4
+```{r}
+#a
+
+cat("\"The quick brown fox \n \ \ \ \ jumped over \n \t the lazy dogs\"")
+
+
+#b
+
+num1 <- 4
+num2 <- 0.75
+res <- num1 * num2
+
+cat("\n \"The result of multiplying",num1," by ",num2," is ",res,"\"")
+
+#c
+
+getwd()
+
+
+#d
+bar <- "How much wood could a woodchuck chuck"
+
+cat(bar, "if a woodchuck could chuck wood")
+gsub(pattern="wood",replacement="metal",x=bar)
+
+#e
+t<-"Two 6-packs for $12.99"
+t_sub<-substr(x=t,start=5,stop=10)
+
+"6-pack"==t_sub
+
+substr(x=t,start = 17, stop=22) <-"$10.99"
+t
+
+```
+
+
+#4.5
+```{r}
+
+sex <- c('F','M','M','M','F','F','F','M','M','M','M','F','M','F','F','F','M','M','M','M')
+
+parties <-c('Labour','National','National','Labour','National','Greens','National','National','Greens','Other','Greens','Labour','National','National','Labour','Labour','National','National','Labour','Other')
+
+sex_fac <- factor(sex,ordered=TRUE)
+parties_fac<- factor(parties,ordered=TRUE)
+
+men <-sex_fac=='M'
+men
+parties_fac[men]
+
+national <-parties_fac =='National'
+sex[national]
+
+c(sex,c("M","M","F","F","F","M"))
+c(parties,c("National","Maori","Maori","Labour","Greens","Labour"))
+
+res <- c(93, 55, 29, 100,52, 84, 56, 0, 33, 52, 35, 53, 55, 46, 40, 40, 56, 45, 64, 31, 10, 29, 40,95, 18, 61)
+factor(res)
+
+br <- c(0,30,70,100)
+label<-c("Low","Moderate","High")
+answer<-cut(x=res,breaks=br,include.lowest=T,labels=label)
+
+answer
+answer[parties_fac=='National']
+
+```
+
+
+#5.1
+
+```{r}
+
+l <- list(s=seq(from=-4,to=4,length.out=20),m=matrix(c(F,T,T,T,F,T,T,F,F),nrow=3,ncol=3),st=c("don","quixote"),f=factor(c("LOW","MED","LOW","MED","MED","HIGH")))
+
+l$m
+l$m[2:1,2:3]
+l$st<-sub(pattern="don",replacement="Don",x=l$st)
+l$st<-sub(pattern="quixote",replacement="Quixote",x=l$st)
+l$st
+cat("\"Windmills! ATTACK!\" \n \ \ -\\",l$st,"/-" )
+
+l$s[which(x=l$s>1)]
+which(x=l$f=='MED')
+
+
+l2 <- list(facs=l$f, nums=c(3,2.1,3.3,4,1.5,4.9),oldlist=l[1:3])
+l2$facs[l2$nums>=3]
+
+
+
+c(l2,flags=list(rep(l2$oldlist$m[,3],times=2)))
+
+l2$nums[which(x=l2$flags != TRUE)]
+
+l2$oldlist$str <- "Don Quixote"
+l2$oldlist$str
+
+```
+
+
+#5.2
+
+```{r}
+funny<-c("High","Med","Low","High","Med","Med")
+funny <-factor(x=funny,levels = c("Low","Med","High"))
+funny
+dframe<-data.frame(person=c("Stan","Fran","Steve","Roger","Hay","Klaus"),sex=factor(c("M","F","M","M","F","M")),funny)
+dframe <- cbind(dframe, age=c(41,41,15,1600,21,60))
+dframe <- dframe[c(1,4,2,3)]
+
+
+
+
+
+mydata <- data.frame(person=c("Peter","Lois","Meg","Chris","Stewie","Brian"),age=c(42,40,17,14,1,7),sex=factor(c("M","F","F","M","M","M")),stringsAsFactors=FALSE,funny=factor(x=c("High","High","Low","Med","High","Med"),levels=c("Low","Med","High")))
+
+mydataframe <- rbind(mydata,dframe)
+mydataframe
+
+
+mydataframe[mydataframe$sex=='F'&(mydataframe$funny=='Med'|mydataframe$funny=='High'),]
+
+mydataframe[substr(mydataframe$person,start=1,stop=1)=='S',]
+
+```
+
+
+
+
+
+#6.1
+
+```{r}
+foo <- c(13563,-14156,-14319,16981,12921,11979,9568,8833,-12968,8133)
+
+foo[which(x=is.infinite(foo^75))]
+foo[which(x=foo^75 != -Inf)]
+
+bar <-matrix(c(77875.40, 27551.45, 23764.,30,-36478.88,-35466.25, -73333.85, 36599.69 -70585.69,-39803.81, 55976.34, 76694.82,47032.00),nrow=3,ncol=4)
+which(x=is.nan(bar^65/Inf))
+
+bar[is.nan(bar^67+Inf)==FALSE]
+bar[bar^67!=-Inf]
+
+bar[bar==-Inf | is.finite(bar^67)]
+
+```
+
+#6.2
+
+```{r}
+
+foo <- c(4.3,2.2,NULL,2.4,NaN,3.3,3.1,NULL,3.4,NA)
+length(foo)
+which(x=is.na(x=foo))
+is.null(x=foo)
+is.na(x=foo[8])+4/NULL
+
+mylist <- list(c(7,7,NA,3,NA,1,1,5,NA))
+names(mylist) <-'alpha'
+exists('mylist$beta')
+b <- list(which(x=is.na(mylist$alpha)))
+
+c(mylist,beta=b)
+
+```
+
+
+#6.3
+
+```{r}
+class(foo <- array(data=1:36,dim=c(3,3,4)))
+class(bar <- as.vector(foo))
+class(baz <- as.character(bar))
+class(qux <- as.factor(baz))
+class(quux <- bar+c(-0.1,0.1))
+
+a=is.numeric(foo)+is.integer(foo)
+b=is.numeric(bar)+is.integer(bar)
+c=is.numeric(baz)+is.integer(baz)
+d=is.numeric(qux)+is.integer(qux)
+e=is.numeric(quux)+is.integer(quux)
+
+
+factor(c(a,b,c,d,e))
+as.numeric(c(a,b,c,d,e))
+
+
+m <- matrix(seq(from=2,to=13),nrow=3,ncol=4)
+as.character(m)
+
+m2 <- matrix(c(34,23,33,42,41,0,1,1,0,0,1,2,1,1,2),nrow=5,ncol=3)
+dfm2 <- as.data.frame(m2)
+dfm2
+as.logical(dfm2[,2]) 
+as.factor(dfm2[,3])
+```
+
