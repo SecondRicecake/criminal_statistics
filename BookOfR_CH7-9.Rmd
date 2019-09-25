@@ -1,0 +1,151 @@
+---
+title: "BookOfR_CH7-9"
+author: "Suz"
+date: '2019 9 22 '
+output: html_document
+---
+
+#7.1
+
+```{r}
+#a
+x<--3:3
+y<-7:13
+plot(x,y,type="n",main="")
+abline(v=c(-3,3), col="grey", lty=2, lwd=2)
+abline(h=c(7,13),col="grey",lty=2, lwd=2
+       )
+arrows(x0=-3,y0=13,x1=-1,y1=10.5)
+arrows(x0=-3,y0=10,x1=-1,y1=10)
+arrows(x0=-3,y0=7,x1=-1,y1=9.5)
+arrows(x0=3,y0=13,x1=1,y1=10.5)
+arrows(x0=3,y0=10,x1=1,y1=10)
+arrows(x0=3,y0=7,x1=1,y1=9.5)
+
+text(x=0,y=10,'SOMETHING\nPROFOUND')
+```
+
+```{r}
+
+#b
+
+weight<-c(55,85,75,42,93,63,58,75,89,67)
+height<-c(161,185,174,154,188,178,170,167,181,178)
+gender <-c('f','m','m','f','m','m','f','m','m','f')
+plot(weight,height,col=ifelse(gender=='f', "blue","red"))
+
+
+```
+
+
+#7.2
+
+
+```{r}
+library("ggplot2")
+x<--3:3
+y<-7:13
+d <-data.frame(x=c(-3:3),y=c(7:13))
+
+qplot(x,y,geom="blank")+geom_vline(aes(1),xintercept = (-3), col="grey",lty=2)+geom_vline(aes(1),xintercept = (3),col="grey",lty=2)+geom_hline(aes(1),yintercept = (7), col="grey",lty=2)+geom_hline(aes(1),yintercept = (13), col="grey",lty=2)+geom_segment(mapping=aes(x=-3,y=13,xend=-1,yend=10.5),color="black",lty=1,arrow = arrow(length = unit(0.5, "cm")))+geom_segment(mapping=aes(x=-3,y=13,xend=-1,yend=10.5),color="black",lty=1,arrow = arrow(length = unit(0.5, "cm")))+geom_segment(mapping=aes(x=-3,y=10,xend=-1,yend=10),color="black",lty=1,arrow = arrow(length = unit(0.5, "cm")))+geom_segment(mapping=aes(x=-3,y=7,xend=-1,yend=9.5),color="black",lty=1,arrow = arrow(length = unit(0.5, "cm")))+geom_segment(mapping=aes(x=3,y=13,xend=1,yend=10.5),color="black",lty=1,arrow = arrow(length = unit(0.5, "cm")))+geom_segment(mapping=aes(x=3,y=10,xend=1,yend=10),color="black",lty=1,arrow = arrow(length = unit(0.5, "cm")))+geom_segment(mapping=aes(x=3,y=7,xend=1,yend=9.5),color="black",lty=1,arrow = arrow(length = unit(0.5, "cm")))+geom_text(data=d,mapping=aes(0,10),size=4,label='SOMETHING\nPROFOUND')
+```
+
+
+```{r}
+
+mydata<-data.frame(weight=c(55,85,75,42,93,63,58,75,89,67),height=c(161,185,174,154,188,178,170,167,181,178),gender=c('f','m','m','f','m','m','f','m','m','f'))
+mydata
+ggplot(data=mydata,aes(x=weight,y=height,color=gender))+geom_point()
+
+
+```
+
+
+```{r}
+#a
+data("quakes")
+myd<-quakes[quakes$mag>=5,]
+write.table(x=myd, file="/Users/Suz/Desktop/2019-2LIFS/criminal_statistics/q5.txt",sep="!",na="??",quote=FALSE,row.names=FALSE)
+
+q5 <-read.table(file="/Users/Suz/Desktop/2019-2LIFS/criminal_statistics/q5.txt",header=TRUE,sep="!",na.strings="??",stringsAsFactors = FALSE)
+q5
+```
+
+```{r}
+#b
+library("carData")
+library("ggplot2")
+data(Duncan)
+s1<-Duncan[Duncan$prestige>80,]
+s2<-Duncan[Duncan$prestige<=80,]
+
+png(filename = "/Users/Suz/Desktop/2019-2LIFS/criminal_statistics/duncan1.png",width=500,height=500)
+ggplot(data=Duncan, aes(x=education,y=income))+xlim(0,100)+ylim(0,100)+geom_point(data=s1,color="black",shape=1)+geom_point(data=s2,color="blue",shape=16)
+dev.off()
+
+```
+
+
+```{r}
+#c
+
+mylst <-list(quakes=quakes,q5=q5,duncan=Duncan)
+dput(x=mylst,file="/Users/Suz/Desktop/2019-2LIFS/criminal_statistics/Exercise8-1.txt")
+list.of.dataframes <- dget(file="/Users/Suz/Desktop/2019-2LIFS/criminal_statistics/Exercise8-1.txt")
+list.of.dataframes
+```
+
+```{r}
+x <- 1:20
+y <- c(-1.49,3.37,2.59,-2.78,-3.94,-0.92,6.43,8.51,3.41,-8.23,
+-12.01,-6.58,2.87,14.12,9.63,-4.58,-14.78,-11.67,1.17,15.62)
+ptype <- rep(NA,length(x=x))
+ptype[y>=5] <- "too_big"
+ptype[y<=-5] <- "too_small"
+ptype[(x>=5&x<=15)&(y>-5&y<5)] <- "sweet"
+ptype[(x<5|x>15)&(y>-5&y<5)] <- "standard"
+ptype <- factor(x=ptype)
+qplot(x,y,color=ptype,shape=ptype)
+ggsave(file="/Users/Suz/Desktop/2019-2LIFS/criminal_statistics/figure7-11.tiff")
+```
+
+#9.1
+
+```{r}
+#a
+ls("package:methods")[1:21]
+length(ls("package:methods"))
+
+#b
+environment(read.table)
+environment(data)
+environment(matrix)
+environment(jpeg)
+
+#c
+
+"smoothScatter" %in% ls("package:graphics")
+
+```
+
+
+#9.2
+
+```{r}
+#a
+seq(-2,2,0.2)
+
+#b
+#i. mixed. position, partial.
+#ii. position
+#iii.exact.
+#iv. exact.
+#v. partial.
+#vi. exact.
+
+#c. 
+#pch,lwd,lty,col
+
+```
+
+
