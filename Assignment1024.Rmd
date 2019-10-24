@@ -1,0 +1,75 @@
+---
+title: "Assignment1024"
+author: "Suz"
+date: '2019 10 24 '
+output: pdf_document
+---
+1) Children's IQ scores are normally distributed with a mean of 100 and a standard deviation of 15. What proportion of children are expected to have an IQ between 80 and 120?
+
+mean=100
+std=15
+lowerbound=80
+upperbound=120
+
+```{r}
+#confidence interval
+mean=100
+std=15
+
+pnorm(120, mean, std, lower.tail=TRUE)- pnorm(80, mean, std, lower.tail=TRUE)
+```
+
+
+2) Generate data for hypothesis testing (student's T-test) and show me one exmaple each of a significant result and a non-significant result. Explain your thinking.
+
+
+Data from: http://fcon_1000.projects.nitrc.org/indi/adhd200/
+
+```{r}
+raw_adhd<-read.csv(file="adhd200.csv")
+df_adhd<-data.frame(raw_adhd)
+an_children<-df_adhd[df_adhd$DX != "pending",] #disregard pending diagnosis
+girls<-an_children[an_children$Gender==0,]
+girls_not<-girls[girls$DX==0,]
+girls_diagnosed <- girls[girls$DX!=0,]
+boys<-an_children[an_children$Gender==1,]
+boys_not<-boys[boys$DX==0,]
+boys_diagnosed <- boys[boys$DX!=0,]
+
+
+#girls_diagnosed
+#boys_diagnosed
+
+boys_age <-boys_diagnosed$Age
+girls_age<-girls_diagnosed$Age
+
+```
+
+T test for the age of girls and boys who were diagnosed:
+
+```{r}
+res1<-t.test(boys_age, girls_age, var.equal = TRUE)
+res1
+```
+
+Significance of comparing the age of girls and boys who were diagnosed:
+```{r}
+res1$p.value < 0.05
+```
+This implies that the difference between the mean of the two dataset can be significant.
+
+
+T test for the age boys who were diagnosed with adhd or boys who were not:
+
+```{r}
+res2<-t.test(boys_not$Age, boys_diagnosed$Age, var.equal=TRUE)
+res2
+```
+
+Significance of comparing the age of boys diagnosed with adhd, and typical for age:
+```{r}
+res2$p.value <0.05
+```
+This implies that the difference between the ages of boys who were diagnosed and who were not is not siginificant, which is most likely the result of using a dataset that was focusing on a certain age interval of children. 
+
+

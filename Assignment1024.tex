@@ -1,0 +1,268 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Assignment1024},
+            pdfauthor={Suz},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\providecommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Assignment1024}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{Suz}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+      \predate{\centering\large\emph}
+  \postdate{\par}
+    \date{2019 10 24}
+
+
+\begin{document}
+\maketitle
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\tightlist
+\item
+  Children's IQ scores are normally distributed with a mean of 100 and a
+  standard deviation of 15. What proportion of children are expected to
+  have an IQ between 80 and 120?
+\end{enumerate}
+
+mean=100 std=15 lowerbound=80 upperbound=120
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#confidence interval}
+\NormalTok{mean=}\DecValTok{100}
+\NormalTok{std=}\DecValTok{15}
+
+\KeywordTok{pnorm}\NormalTok{(}\DecValTok{120}\NormalTok{, mean, std, }\DataTypeTok{lower.tail=}\OtherTok{TRUE}\NormalTok{)}\OperatorTok{-}\StringTok{ }\KeywordTok{pnorm}\NormalTok{(}\DecValTok{80}\NormalTok{, mean, std, }\DataTypeTok{lower.tail=}\OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.8175776
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Generate data for hypothesis testing (student's T-test) and show me
+  one exmaple each of a significant result and a non-significant result.
+  Explain your thinking.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{raw_adhd<-}\KeywordTok{read.csv}\NormalTok{(}\DataTypeTok{file=}\StringTok{"adhd200.csv"}\NormalTok{)}
+\NormalTok{df_adhd<-}\KeywordTok{data.frame}\NormalTok{(raw_adhd)}
+\NormalTok{an_children<-df_adhd[df_adhd}\OperatorTok{$}\NormalTok{DX }\OperatorTok{!=}\StringTok{ "pending"}\NormalTok{,] }\CommentTok{#disregard pending diagnosis}
+\NormalTok{girls<-an_children[an_children}\OperatorTok{$}\NormalTok{Gender}\OperatorTok{==}\DecValTok{0}\NormalTok{,]}
+\NormalTok{girls_not<-girls[girls}\OperatorTok{$}\NormalTok{DX}\OperatorTok{==}\DecValTok{0}\NormalTok{,]}
+\NormalTok{girls_diagnosed <-}\StringTok{ }\NormalTok{girls[girls}\OperatorTok{$}\NormalTok{DX}\OperatorTok{!=}\DecValTok{0}\NormalTok{,]}
+\NormalTok{boys<-an_children[an_children}\OperatorTok{$}\NormalTok{Gender}\OperatorTok{==}\DecValTok{1}\NormalTok{,]}
+\NormalTok{boys_not<-boys[boys}\OperatorTok{$}\NormalTok{DX}\OperatorTok{==}\DecValTok{0}\NormalTok{,]}
+\NormalTok{boys_diagnosed <-}\StringTok{ }\NormalTok{boys[boys}\OperatorTok{$}\NormalTok{DX}\OperatorTok{!=}\DecValTok{0}\NormalTok{,]}
+
+
+\CommentTok{#girls_diagnosed}
+\CommentTok{#boys_diagnosed}
+
+\NormalTok{boys_age <-boys_diagnosed}\OperatorTok{$}\NormalTok{Age}
+\NormalTok{girls_age<-girls_diagnosed}\OperatorTok{$}\NormalTok{Age}
+\end{Highlighting}
+\end{Shaded}
+
+T test for the age of girls and boys who were diagnosed:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{res1<-}\KeywordTok{t.test}\NormalTok{(boys_age, girls_age, }\DataTypeTok{var.equal =} \OtherTok{TRUE}\NormalTok{)}
+\NormalTok{res1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Two Sample t-test
+## 
+## data:  boys_age and girls_age
+## t = 2.0376, df = 75, p-value = 0.04511
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  0.03977795 3.51951617
+## sample estimates:
+## mean of x mean of y 
+##  12.09200  10.31235
+\end{verbatim}
+
+Significance of comparing the age of girls and boys who were diagnosed:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{res1}\OperatorTok{$}\NormalTok{p.value }\OperatorTok{<}\StringTok{ }\FloatTok{0.05}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+This implies that the difference between the mean of the two dataset can
+be significant.
+
+T test for the age boys who were diagnosed with adhd or boys who were
+not:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{res2<-}\KeywordTok{t.test}\NormalTok{(boys_not}\OperatorTok{$}\NormalTok{Age, boys_diagnosed}\OperatorTok{$}\NormalTok{Age, }\DataTypeTok{var.equal=}\OtherTok{TRUE}\NormalTok{)}
+\NormalTok{res2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Two Sample t-test
+## 
+## data:  boys_not$Age and boys_diagnosed$Age
+## t = -1.5955, df = 104, p-value = 0.1136
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -2.2654290  0.2453421
+## sample estimates:
+## mean of x mean of y 
+##  11.08196  12.09200
+\end{verbatim}
+
+Significance of comparing the age of boys diagnosed with adhd, and
+typical for age:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{res2}\OperatorTok{$}\NormalTok{p.value }\OperatorTok{<}\FloatTok{0.05}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] FALSE
+\end{verbatim}
+
+This implies that the difference between the ages of boys who were
+diagnosed and who were not is not siginificant, which is most likely the
+result of using a dataset that was focusing on a certain age interval of
+children.
+
+
+\end{document}
