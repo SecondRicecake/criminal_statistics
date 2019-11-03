@@ -2,7 +2,10 @@
 title: "Assignment1024"
 author: "Suz"
 date: '2019 10 24 '
-output: pdf_document
+output:
+  word_document: default
+  html_document:
+    df_print: paged
 ---
 1) Children's IQ scores are normally distributed with a mean of 100 and a standard deviation of 15. What proportion of children are expected to have an IQ between 80 and 120?
 
@@ -12,11 +15,13 @@ lowerbound=80
 upperbound=120
 
 ```{r}
-#confidence interval
+#probability from a normal distribution
 mean=100
 std=15
+lowerbound=80
+upperbound=120
 
-pnorm(120, mean, std, lower.tail=TRUE)- pnorm(80, mean, std, lower.tail=TRUE)
+pnorm(upperbound, mean, std, lower.tail=TRUE)- pnorm(lowerbound, mean, std, lower.tail=TRUE)
 ```
 
 
@@ -56,7 +61,7 @@ Significance of comparing the age of girls and boys who were diagnosed:
 ```{r}
 res1$p.value < 0.05
 ```
-This implies that the difference between the mean of the two dataset can be significant.
+This implies that the difference between the mean of the two dataset can be significant. However, shapiro test showed that the boys data was not normally distributed, which could show a wrong result.
 
 
 T test for the age boys who were diagnosed with adhd or boys who were not:

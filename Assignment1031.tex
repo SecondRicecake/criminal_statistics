@@ -13,6 +13,7 @@
     \usepackage{fontspec}
   \fi
   \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+    \setmainfont[]{NanumGothic}
 \fi
 % use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -24,7 +25,7 @@
 \usepackage[margin=1in]{geometry}
 \usepackage{hyperref}
 \hypersetup{unicode=true,
-            pdftitle={Assignment1024},
+            pdftitle={1031\_class},
             pdfauthor={Suz},
             pdfborder={0 0 0},
             breaklinks=true}
@@ -114,7 +115,7 @@
 
 \setlength{\droptitle}{-2em}
 
-  \title{Assignment1024}
+  \title{1031\_class}
     \pretitle{\vspace{\droptitle}\centering\huge}
   \posttitle{\par}
     \author{Suz}
@@ -122,149 +123,75 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2019 10 24}
+    \date{2019 10 31}
 
 
 \begin{document}
 \maketitle
 
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi})}
-\tightlist
-\item
-  Children's IQ scores are normally distributed with a mean of 100 and a
-  standard deviation of 15. What proportion of children are expected to
-  have an IQ between 80 and 120?
-\end{enumerate}
-
-mean=100 std=15 lowerbound=80 upperbound=120
-
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{#confidence interval}
-\NormalTok{mean=}\DecValTok{100}
-\NormalTok{std=}\DecValTok{15}
+\CommentTok{#READ MY CSVs}
 
-\KeywordTok{pnorm}\NormalTok{(}\DecValTok{120}\NormalTok{, mean, std, }\DataTypeTok{lower.tail=}\OtherTok{TRUE}\NormalTok{)}\OperatorTok{-}\StringTok{ }\KeywordTok{pnorm}\NormalTok{(}\DecValTok{80}\NormalTok{, mean, std, }\DataTypeTok{lower.tail=}\OtherTok{TRUE}\NormalTok{)}
+\NormalTok{hc<-}\KeywordTok{data.frame}\NormalTok{(}\KeywordTok{read.csv}\NormalTok{(}\StringTok{"HealthCare.csv"}\NormalTok{,}\DataTypeTok{header=}\OtherTok{TRUE}\NormalTok{,}\DataTypeTok{encoding=}\StringTok{"UTF-8"}\NormalTok{, }\DataTypeTok{stringsAsFactors=}\OtherTok{FALSE}\NormalTok{))}
+\NormalTok{le<-}\KeywordTok{data.frame}\NormalTok{(}\KeywordTok{read.csv}\NormalTok{(}\StringTok{"LifeExpectancy.csv"}\NormalTok{,}\DataTypeTok{header=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{skip=}\DecValTok{2}\NormalTok{))}
+\NormalTok{ob<-}\KeywordTok{data.frame}\NormalTok{(}\KeywordTok{read.csv}\NormalTok{(}\StringTok{"Obesity.csv"}\NormalTok{,}\DataTypeTok{header=}\OtherTok{TRUE}\NormalTok{))}
+
+\CommentTok{#scattermatrix function}
+
+\NormalTok{create_scattermatrix<-}\ControlFlowTok{function}\NormalTok{(countryabbr)\{}
+
+\NormalTok{hc_subset<-hc[hc}\OperatorTok{$}\NormalTok{X.U.FEFF.COUNTRY}\OperatorTok{==}\NormalTok{countryabbr}\OperatorTok{&}\NormalTok{hc}\OperatorTok{$}\NormalTok{SUBJECT}\OperatorTok{==}\StringTok{"TOT"}\OperatorTok{&}\NormalTok{hc}\OperatorTok{$}\NormalTok{MEASURE}\OperatorTok{==}\StringTok{"PC_GDP"}\NormalTok{,]}
+
+\NormalTok{le_subset<-le[le}\OperatorTok{$}\NormalTok{Country.Code}\OperatorTok{==}\NormalTok{countryabbr,]}
+
+\NormalTok{ob_subset<-ob[ob}\OperatorTok{$}\NormalTok{ISO}\OperatorTok{==}\NormalTok{countryabbr}\OperatorTok{&}\NormalTok{ob}\OperatorTok{$}\NormalTok{Sex}\OperatorTok{==}\StringTok{"Women"}\NormalTok{,] }\CommentTok{#Women/Men}
+
+\NormalTok{Years<-hc_subset}\OperatorTok{$}\NormalTok{TIME[}\DecValTok{6}\OperatorTok{:}\NormalTok{(}\KeywordTok{length}\NormalTok{(hc_subset}\OperatorTok{$}\NormalTok{TIME)}\OperatorTok{-}\DecValTok{2}\NormalTok{)] }\CommentTok{#cut years from 1975 to 2016}
+
+\NormalTok{Healthcare<-hc_subset}\OperatorTok{$}\NormalTok{Value[}\DecValTok{6}\OperatorTok{:}\NormalTok{(}\KeywordTok{length}\NormalTok{(hc_subset}\OperatorTok{$}\NormalTok{TIME)}\OperatorTok{-}\DecValTok{2}\NormalTok{)] }\CommentTok{#cut years from 1975 to 2016}
+
+\NormalTok{df_YH<-}\KeywordTok{cbind}\NormalTok{(Years,Healthcare) }\CommentTok{#create data frame with Years and Healthcaredata}
+
+
+\NormalTok{le_}\DecValTok{1975}\NormalTok{_}\DecValTok{2016}\NormalTok{<-}\KeywordTok{data.frame}\NormalTok{(}\KeywordTok{t}\NormalTok{(le_subset[}\DecValTok{23}\OperatorTok{:}\KeywordTok{length}\NormalTok{(le_subset)}\OperatorTok{-}\DecValTok{3}\NormalTok{])) }\CommentTok{#cut years from 1975 to 2016}
+\KeywordTok{colnames}\NormalTok{(le_}\DecValTok{1975}\NormalTok{_}\DecValTok{2016}\NormalTok{)<-}\StringTok{"LifeExpectancy"} \CommentTok{#change colname}
+
+
+\NormalTok{df_YHL<-}\KeywordTok{cbind}\NormalTok{(df,}\DataTypeTok{LifeExpectancy=}\NormalTok{le_}\DecValTok{1975}\NormalTok{_}\DecValTok{2016}\OperatorTok{$}\NormalTok{LifeExpectancy) }\CommentTok{#bind data frames. Now with Years, Healthcare, LifeExpectancy.}
+
+\NormalTok{mydataset<-}\KeywordTok{cbind}\NormalTok{(df_YHL, }\DataTypeTok{BMI=}\NormalTok{ob_subset}\OperatorTok{$}\NormalTok{Mean.BMI)}
+
+\KeywordTok{pairs}\NormalTok{(}\OperatorTok{~}\NormalTok{Healthcare}\OperatorTok{+}\NormalTok{LifeExpectancy}\OperatorTok{+}\NormalTok{BMI,}\DataTypeTok{data=}\NormalTok{mydataset,}\DataTypeTok{main=}\KeywordTok{paste}\NormalTok{(}\StringTok{"Scatterplot Matrix for"}\NormalTok{,countryabbr))}
+\NormalTok{\}}
+
+\KeywordTok{create_scattermatrix}\NormalTok{(}\StringTok{"USA"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.8175776
+## Error in model.frame.default(formula = ~Healthcare + LifeExpectancy + : 변수 LifeExpectancy에 유효하지 않은 타입 (list)입니다
 \end{verbatim}
 
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi})}
-\setcounter{enumi}{1}
-\tightlist
-\item
-  Generate data for hypothesis testing (student's T-test) and show me
-  one exmaple each of a significant result and a non-significant result.
-  Explain your thinking.
-\end{enumerate}
-
-Data from: \url{http://fcon_1000.projects.nitrc.org/indi/adhd200/}
-
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{raw_adhd<-}\KeywordTok{read.csv}\NormalTok{(}\DataTypeTok{file=}\StringTok{"adhd200.csv"}\NormalTok{)}
-\NormalTok{df_adhd<-}\KeywordTok{data.frame}\NormalTok{(raw_adhd)}
-\NormalTok{an_children<-df_adhd[df_adhd}\OperatorTok{$}\NormalTok{DX }\OperatorTok{!=}\StringTok{ "pending"}\NormalTok{,] }\CommentTok{#disregard pending diagnosis}
-\NormalTok{girls<-an_children[an_children}\OperatorTok{$}\NormalTok{Gender}\OperatorTok{==}\DecValTok{0}\NormalTok{,]}
-\NormalTok{girls_not<-girls[girls}\OperatorTok{$}\NormalTok{DX}\OperatorTok{==}\DecValTok{0}\NormalTok{,]}
-\NormalTok{girls_diagnosed <-}\StringTok{ }\NormalTok{girls[girls}\OperatorTok{$}\NormalTok{DX}\OperatorTok{!=}\DecValTok{0}\NormalTok{,]}
-\NormalTok{boys<-an_children[an_children}\OperatorTok{$}\NormalTok{Gender}\OperatorTok{==}\DecValTok{1}\NormalTok{,]}
-\NormalTok{boys_not<-boys[boys}\OperatorTok{$}\NormalTok{DX}\OperatorTok{==}\DecValTok{0}\NormalTok{,]}
-\NormalTok{boys_diagnosed <-}\StringTok{ }\NormalTok{boys[boys}\OperatorTok{$}\NormalTok{DX}\OperatorTok{!=}\DecValTok{0}\NormalTok{,]}
-
-
-\CommentTok{#girls_diagnosed}
-\CommentTok{#boys_diagnosed}
-
-\NormalTok{boys_age <-boys_diagnosed}\OperatorTok{$}\NormalTok{Age}
-\NormalTok{girls_age<-girls_diagnosed}\OperatorTok{$}\NormalTok{Age}
-\end{Highlighting}
-\end{Shaded}
-
-T test for the age of girls and boys who were diagnosed:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{res1<-}\KeywordTok{t.test}\NormalTok{(boys_age, girls_age, }\DataTypeTok{var.equal =} \OtherTok{TRUE}\NormalTok{)}
-\NormalTok{res1}
+\KeywordTok{create_scattermatrix}\NormalTok{(}\StringTok{"KOR"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## 
-##  Two Sample t-test
-## 
-## data:  boys_age and girls_age
-## t = 2.0376, df = 75, p-value = 0.04511
-## alternative hypothesis: true difference in means is not equal to 0
-## 95 percent confidence interval:
-##  0.03977795 3.51951617
-## sample estimates:
-## mean of x mean of y 
-##  12.09200  10.31235
+## Error in model.frame.default(formula = ~Healthcare + LifeExpectancy + : 변수 LifeExpectancy에 유효하지 않은 타입 (list)입니다
 \end{verbatim}
-
-Significance of comparing the age of girls and boys who were diagnosed:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{res1}\OperatorTok{$}\NormalTok{p.value }\OperatorTok{<}\StringTok{ }\FloatTok{0.05}
+\KeywordTok{create_scattermatrix}\NormalTok{(}\StringTok{"ITA"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] TRUE
+## Error in model.frame.default(formula = ~Healthcare + LifeExpectancy + : 변수 LifeExpectancy에 유효하지 않은 타입 (list)입니다
 \end{verbatim}
-
-This implies that the difference between the mean of the two dataset can
-be significant.
-
-T test for the age boys who were diagnosed with adhd or boys who were
-not:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{res2<-}\KeywordTok{t.test}\NormalTok{(boys_not}\OperatorTok{$}\NormalTok{Age, boys_diagnosed}\OperatorTok{$}\NormalTok{Age, }\DataTypeTok{var.equal=}\OtherTok{TRUE}\NormalTok{)}
-\NormalTok{res2}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 
-##  Two Sample t-test
-## 
-## data:  boys_not$Age and boys_diagnosed$Age
-## t = -1.5955, df = 104, p-value = 0.1136
-## alternative hypothesis: true difference in means is not equal to 0
-## 95 percent confidence interval:
-##  -2.2654290  0.2453421
-## sample estimates:
-## mean of x mean of y 
-##  11.08196  12.09200
-\end{verbatim}
-
-Significance of comparing the age of boys diagnosed with adhd, and
-typical for age:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{res2}\OperatorTok{$}\NormalTok{p.value }\OperatorTok{<}\FloatTok{0.05}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] FALSE
-\end{verbatim}
-
-This implies that the difference between the ages of boys who were
-diagnosed and who were not is not siginificant, which is most likely the
-result of using a dataset that was focusing on a certain age interval of
-children.
 
 
 \end{document}

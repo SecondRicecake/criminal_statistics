@@ -1,0 +1,96 @@
+---
+title: "1031_class"
+author: "Suz"
+date: '2019 10 31 '
+output:
+  html_document: default
+  pdf_document: default
+
+---
+
+```{r}
+
+#READ MY CSVs
+
+hc<-data.frame(read.csv("./dataset/HealthCare.csv",header=TRUE,encoding="UTF-8", stringsAsFactors=FALSE))
+le<-data.frame(read.csv("./dataset/LifeExpectancy.csv",header=TRUE,encoding="UTF-8", skip=2,stringsAsFactors=FALSE))
+ob<-data.frame(read.csv("./dataset/Obesity.csv",encoding="UTF-8", header=TRUE,stringsAsFactors=FALSE))
+
+#find matching countries
+hc_country_lst<-unique(hc$X.U.FEFF.COUNTRY)
+#hc_country_lst
+le_country_lst <-unique(le$Country.Code)
+#le_country_lst
+ob_country_lst<-unique(ob$ISO)
+
+tmp <-subset(hc_country_lst, hc_country_lst %in% le_country_lst)
+countries<-subset(tmp, tmp %in% ob_country_lst)
+countries
+
+
+#scattermatrix function
+
+create_scattermatrix<-function(countryabbr){
+
+hc_subset<-hc[hc$X.U.FEFF.COUNTRY==countryabbr&hc$SUBJECT=="TOT"&hc$MEASURE=="PC_GDP",]
+
+le_subset<-le[le$Country.Code==countryabbr,]
+
+ob_subset<-ob[ob$ISO==countryabbr&ob$Sex=="Women",] #Women/Men
+
+Years<-hc_subset$TIME[6:(length(hc_subset$TIME)-2)] #cut years from 1975 to 2016
+
+Healthcare<-hc_subset$Value[6:(length(hc_subset$TIME)-2)] #cut years from 1975 to 2016
+
+le_1975_2016<-data.frame(t(le_subset[23:length(le_subset)-3])) #cut years from 1975 to 2016
+colnames(le_1975_2016)<-"LifeExpectancy" #change colname
+#print(length(le_1975_2016)) <-this dataset only has 1 column!!!! the years are column names; No need for dataset$colname !!!
+
+mydataset<-data.frame(Healthcare=Healthcare,LifeExpectancy=le_1975_2016,BMI=ob_subset$Mean.BMI) #bind data frames. Years, Healthcare, LifeExpectancy, BMI
+#print(mydataset)
+#print(dim(mydataset))
+pairs(~Healthcare+LifeExpectancy+BMI,data=mydataset,main=paste("Scatterplot Matrix for", countryabbr))
+
+
+}
+
+create_scattermatrix("USA")
+create_scattermatrix("KOR")
+
+
+
+
+```
+
+
+
+
+
+<!-- hc<-data.frame(read.csv("HealthCare.csv",header=TRUE,encoding="UTF-8", stringsAsFactors=FALSE)) -->
+<!-- le<-data.frame(read.csv("LifeExpectancy.csv",header=TRUE, skip=2)) -->
+<!-- ob<-data.frame(read.csv("Obesity.csv",header=TRUE)) -->
+
+<!-- hc_usa<-hc[hc$X.U.FEFF.COUNTRY=="USA"&hc$SUBJECT=="TOT"&hc$MEASURE=="PC_GDP",] -->
+
+<!-- le_usa<-le[le$Country.Name=="United States",] -->
+
+<!-- ob_usa<-ob[ob$ISO=="USA"&ob$Sex=="Women",] -->
+
+
+<!-- Years<-hc_usa$TIME[6:(length(hc_usa$TIME)-2)] #cut years to 1975 to 2016 -->
+<!-- Healthcare<-hc_usa$Value[6:(length(hc_usa$TIME)-2)] #cut years to 1975 to 2016 -->
+<!-- df<-cbind(Years,Healthcare) -->
+<!-- #colnames(df) -->
+<!-- #df -->
+
+<!-- le_usa_1975_2016<-data.frame(t(le_usa[23:length(le_usa)-3])) -->
+<!-- colnames(le_usa_1975_2016)<-"LifeExpectancy" -->
+<!-- #le_usa_1975_2016 -->
+<!-- df2<-cbind(df,LifeExpectancy=le_usa_1975_2016$LifeExpectancy) -->
+<!-- #df2 -->
+
+<!-- mydataset<-cbind(df2, BMI=ob_usa$Mean.BMI) -->
+<!-- #mydataset -->
+
+<!-- pairs(~Healthcare+LifeExpectancy+BMI,data=mydataset,main="Scatterplot Matrix for Health, Longevity and Obesity") -->
+
