@@ -1,0 +1,33 @@
+---
+title: "Assignment1107"
+author: "Suz"
+date: '2019 11 7 '
+output:
+  pdf_document: default
+  html_document: default
+---
+
+Using the 'cars' data set built in to R Studio, do the following:
+
+1. Generate a scatter plot of the data
+2. Find the correlation between the speed and distance variables
+3. Generate a linear regression model and show it's summary
+
+```{r}
+?mtcars
+pairs(~mpg+cyl+disp+hp+drat+wt+qsec+vs+am+gear+carb,data = mtcars,
+   main = "Scatterplot Matrix")
+
+```
+
+```{r}
+#cor.test(mtcars$qsec,mtcars$disp,method = c("pearson", "kendall", "spearman"))
+cor(mtcars$qsec,mtcars$disp)
+```
+
+
+```{r}
+multi_linear <- lm(mpg~cyl+disp+hp+drat+wt+qsec+vs+am+gear+carb,data=mtcars)
+summary(multi_linear)
+```
+

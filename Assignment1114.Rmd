@@ -1,0 +1,57 @@
+---
+title: "Assignment1114"
+author: "Suz"
+date: '2019 11 7 '
+output: html_document
+---
+ 	
+1. Create a prediction hypothesis
+2. Find data related to the prediction
+3. Clean the data and get it ready for R Studio
+
+
+Data from: http://fcon_1000.projects.nitrc.org/indi/adhd200/
+
+Hypothesis: Children who were diagnosed with Combined/Hyperactive-Impulsive ADHD are likely to be diagnosed at an earlier age than Inattentive type of ADHD.
+
+Diagnosis(DX) code:
+0 Typically Developing Children 
+1 ADHD-Combined
+2 ADHD-Hyperactive/Impulsive
+3 ADHD-Inattentive
+
+```{r}
+raw_adhd<-read.csv(file="adhd200.csv")
+df_adhd<-data.frame(raw_adhd)
+children<-df_adhd[df_adhd$DX != "pending",] #disregard pending diagnosis
+
+colnames(children)
+```
+
+
+T test for the age of children who were diagnosed with different types of ADHD:
+```{r}
+hyper_impulsive <- children[(children$DX==1 | children$DX==2),]
+inattentive <- children[children$DX==3,]
+
+#hyper_impulsive
+#inattentive
+res <- t.test(hyper_impulsive$Age, inattentive$Age)
+res
+```
+
+Significance of comparing the age of children who were diagnosed with Combined/Hyperactive-Impulsive or Inattentive:
+```{r}
+res$p.value < 0.05
+```
+
+This implies that the difference between the mean of the two dataset is not significant. 
+
+
+```{r}
+res2 <- t.test(hyper_impulsive$Gender, inattentive$Gender)
+res2$p.value
+```
+
+
+
