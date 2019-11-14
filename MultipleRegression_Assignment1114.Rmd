@@ -1,0 +1,76 @@
+---
+title: "Assignment1114"
+author: "Suz"
+date: '2019 11 14 '
+output:
+  pdf_document: default
+  html_document: default
+---
+
+#show equation
+#don't show code for summary >> {r echo=FALSE}
+
+
+Dependant Variable (Response): mpg
+Independant Variables (Predictor): disp, hp, wt
+
+First to look into the relationship between the variables we look into the plots:
+
+```{r echo=FALSE}
+plot(mpg~disp+hp+wt, data=mtcars)
+```
+
+From this, we can assume that mpg and the other variables are in a negative relationship.
+Next we create a linear model regression with the variables, with mpg as the response variable to see how much each variables contribute in predicting mpg.
+
+```{r}
+stp1<-lm(mpg~disp+hp+wt, data=mtcars)
+```
+
+The summary:
+```{r echo=FALSE}
+summary(stp1)
+```
+
+The mathematical equation for this is:
+
+mpg = 37.105505 + (-0.000937) * disp + (-0.031157) * hp + (-3.800891) * wt
+
+With this equation we are able to predict the mileage per gallon depending on the disp, hp, wt variables.
+
+However, as disp does not have a significance under 0.05, we leave it out in the next step.
+
+```{r}
+stp2<-lm(mpg~hp+wt, data=mtcars)
+```
+
+The summary:
+```{r echo=FALSE}
+summary(stp2)
+```
+
+
+Both variables have a significance level of 99% (p-value < 0.01).
+
+Now we will see how much the variables effect mpg not individually but paired.
+
+```{r}
+stp3<-lm(mpg~hp*wt,data=mtcars)
+```
+
+The summary:
+```{r echo=FALSE}
+summary(stp3)
+```
+
+We can see that hp and wt together have a positive relationship to mpg, but the significance level is lower than when calculated individually.
+Therefore, the interaction between hp and wt can be statistically less significant to consider into the equation.
+
+The final equation of step 3 model looks like this:
+
+mpg = 49.80 + (-0.12010)* hp + (-8.21662) * wt + (0.02785) *(hp:wt)
+
+A change in the value of wt would make the biggest change in the value of mpg.
+
+
+

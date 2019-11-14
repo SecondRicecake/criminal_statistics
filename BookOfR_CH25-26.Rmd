@@ -1,0 +1,72 @@
+---
+title: "BookLast"
+author: "Suz"
+date: '2019 11 8 '
+output: html_document
+---
+
+#25.1
+```{r}
+
+col2rgb(c("black","green3","pink"))
+rgb(t(col2rgb(c("black","green3","pink"))),maxColorValue=255)
+
+pcol <- function(cols){
+n <- length(cols)
+dev.new(width=7,height=7)
+par(mar=rep(1,4))
+plot(1:5,1:5,type="n",xaxt="n",yaxt="n",ann=FALSE)
+for(i in 1:n){
+pt <- locator(1)
+rgbval <- col2rgb(cols[i])
+points(pt,cex=4,pch=19,col=cols[i])
+text(pt$x+1,pt$y,family="mono",label=paste("\"",cols[i],"\"","\nR: ",rgbval[1]," G: ",rgbval[2]," B: ",rgbval[3],"\nhex:",rgb(t(rgbval),maxColorValue=255),sep=""))
+}
+}
+
+normalize <- function(datavec){
+lo <- min(datavec,na.rm=TRUE)
+up <- max(datavec,na.rm=TRUE)
+datanorm <- (datavec-lo)/(up-lo)
+return(datanorm)
+}
+mycols <- c("black","blue","royalblue2","pink","magenta","purple",
+"violet","coral","lightgray","seagreen4","red","red2",
+"yellow","lemonchiffon3")
+
+pcol(mycols)
+
+puryel.colors <- colorRampPalette(colors=c("purple","yellow"))
+py <- puryel.colors(N)
+
+dev.new(width=8,height=2)
+R> par(mar=c(1,8,1,1))
+R> plot(1,1,xlim=c(1,N),ylim=c(0.5,4.5),type="n",xaxt="n",yaxt="n",ann=FALSE)
+R> points(rep(1:N,4),rep(4:1,each=N),pch=19,cex=3,col=c(py,bls,frs,pat))
+R> axis(2,at=4:1,labels=c("peryel.colors","blues","fours","patriot.colors"),
+family="mono",las=1)
+
+
+```
+
+#25.2
+```{r}
+
+```
+
+#25.3
+```{r}
+
+```
+
+#25.4
+```{r}
+
+```
+
+
+#25.5
+```{r}
+
+```
+
