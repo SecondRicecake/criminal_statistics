@@ -14,6 +14,7 @@ output:
 Dependant Variable (Response): mpg
 Independant Variables (Predictor): disp, hp, wt
 
+
 First to look into the relationship between the variables we look into the plots:
 
 ```{r echo=FALSE}
@@ -22,6 +23,23 @@ plot(mpg~disp+hp+wt, data=mtcars)
 
 From this, we can assume that mpg and the other variables are in a negative relationship.
 Next we create a linear model regression with the variables, with mpg as the response variable to see how much each variables contribute in predicting mpg.
+
+A linear model can be created using the lm() function. The minimum parameter it takes is the formular, which is constructed like this:
+
+__(eq1)__ _lm(reponse variable ~ predictor variable)_
+
+Use tilda(~) to divide the reponse variable to the Left hand side, the individual variables to the Right hand side.
+For multiple individual variables, you can use '+' to add another variable.
+
+__(eq2)__ _lm(reponse variable ~ predictor variable1+predictor variable2)_
+
+If you want to also add the interaction coefficient of each variables you can use ':'.
+
+__(eq3)__ _lm(reponse variable ~ predictor variable1+predictor variable2+predictor variable1:predictor variable2)_
+
+To simplify eq3 above use '*'.
+
+__(eq4)__ _lm(reponse variable ~ predictor variable1 * predictor variable2)_
 
 ```{r}
 stp1<-lm(mpg~disp+hp+wt, data=mtcars)
